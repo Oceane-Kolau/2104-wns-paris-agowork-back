@@ -49,6 +49,12 @@ Commandes à lancer dans le repository front au niveau du docker compose :
   . for user :
   docker exec -it agowork_back node -e 'require("./src/fixtures/userData.js").createUser()'
 
+  . for mood: 
+  docker exec -it agowork_back node -e 'require("./src/fixtures/moodData.js").createMood()'
+
+  . for campus: 
+  docker exec -it agowork_back node -e 'require("./src/fixtures/campusData.js").createCampus()'
+
   . for module: 
   docker exec -it agowork_back node -e 'require("./src/fixtures/moduleData.js").createModule()'
 
