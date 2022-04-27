@@ -4,8 +4,7 @@ ObjectId = require('mongodb').ObjectID;
 
 module.exports.createCampus = async function () {
     try {
-        const dbLink = process.env.DB_LINK;
-        const dbUrl = 'mongodb://' + dbLink + ':27017/agowork';
+        const dbUrl = 'mongodb://mongodb:27017/agowork';
         const options = {
             useCreateIndex: true,
             useNewUrlParser: true,

@@ -49,6 +49,12 @@ Commandes à lancer dans le repository front au niveau du docker compose :
   . for user :
   docker exec -it agowork_back node -e 'require("./src/fixtures/userData.js").createUser()'
 
+  . for mood: 
+  docker exec -it agowork_back node -e 'require("./src/fixtures/moodData.js").createMood()'
+
+  . for campus: 
+  docker exec -it agowork_back node -e 'require("./src/fixtures/campusData.js").createCampus()'
+
   . for module: 
   docker exec -it agowork_back node -e 'require("./src/fixtures/moduleData.js").createModule()'
 
@@ -72,6 +78,5 @@ Create .env.local and .env on the front end root repository with the following i
 Create .env.local and .env on the back end root repository with the following information : 
   - DB_DATABASE : name of the database if secret
   - DB_PASS : password of the database 
-  - DB_LINK : nom de l'image docker ou localhost si lancement du projet sans docker et en environement de developpement 
   - SECRET_JWT : Secret for connection (JWT) 
   -> Don't forget to check in the src/config/environment.dev.ts that variables are set 

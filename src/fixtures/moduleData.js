@@ -5,8 +5,7 @@ require("dotenv").config();
 
 module.exports.createModule = async function () {
   try {
-    const dbLink = process.env.DB_LINK;
-    const dbUrl = 'mongodb://' + dbLink + ':27017/agowork';
+    const dbUrl = 'mongodb://mongodb:27017/agowork';
     const options = {
       useCreateIndex: true,
       useNewUrlParser: true,
