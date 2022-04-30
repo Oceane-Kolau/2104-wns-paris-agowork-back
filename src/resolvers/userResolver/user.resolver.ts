@@ -20,19 +20,28 @@ export default class UserResolver {
     return user;
   }
 
+  @Mutation(returns => Boolean)
+  async updateNeedHelp(@Ctx() ctx: Context, @Arg("needHelp", () => Boolean) needHelp:Boolean):Promise<Boolean> {
+    const updatedHelp = needHelp;
+    const updatedUser = await UserModel.findOneAndUpdate({ email: ctx.email }, {needHelp: needHelp as Boolean}).exec();
+    if (!updatedUser) throw new Error("Aucun utilisateur trouvé");
+    return updatedHelp;
+  }
+
   @Mutation(() => User)
   async updateUser(@Arg("input") input: UserInput): Promise<User | null> {
-    console.log("input", input);
     let password;
+
     if (input.password ===  null || input.password === undefined) {
       const user = await UserModel.findById({_id: input.id });
       if (!user) {
-        throw new Error("Lutilisateur est introuvable");
+        throw new Error("Utilisateur introuvable");
       }
       password = user?.password;
     } else {
       password = bcrypt.hashSync(input.password, 12);
     }
+
     const body: any = {
       firstname: input.firstname,
       lastname: input.lastname,
@@ -42,11 +51,13 @@ export default class UserResolver {
       role: input.role,
       campus: input.campus,
     };
+
     const updatedUser = await UserModel.findOneAndUpdate({ _id: input.id }, body, {returnOriginal: false}).populate("campus").populate("mood").exec();
-    console.log("updatedUser", updatedUser)
+
     if (!updatedUser) {
-      throw new Error("La modification n'a pas pu être éffectuée. Si cela persiste, contactez vore administrateur");
+      throw new Error("La modification n'a pas pu être effectuée. Si cela persiste, contactez vore administrateur");
     }
+
     return updatedUser;
   }
 }
