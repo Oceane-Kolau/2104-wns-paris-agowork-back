@@ -18,13 +18,13 @@ import {
     @Authorized(["ADMIN", "SUPERADMIN"])
     @Mutation(() => User)
     async createUser(@Arg("input") input: UserInput): Promise<User> {
-      console.log(input);
       const hashedPassword = await bcrypt.hashSync(input.password, 12);
       const campus = await CampusModel.findById({ _id: input.campus }).exec();
-      console.log(campus)
       const mood = await MoodModel.findOne({ name: "Au top" }).exec();
+
       if (!campus) throw new Error('Campus introuvable');
       if (!mood) throw new Error('Mood introuvable');
+
       const body = {
         firstname: input.firstname,
         lastname: input.lastname,
@@ -36,8 +36,9 @@ import {
         password: hashedPassword,
         mood: mood.id,
       };
+
       let user = await(await UserModel.create(body)).save();
-      console.log(user);
+      
       user = await user.populate('campus').populate('mood').execPopulate();
       return user;
     }
@@ -61,7 +62,6 @@ import {
     @Query(() => User, { nullable: true })
     async getUserById(@Arg("id", () => ID) id: string) {
       const user = await UserModel.findById(id).populate('campus').populate('mood').exec();
-      console.log(user);
       if (!user) throw new Error('Aucun utilisateur ne correspond à la demande');
       return user;
     }
