@@ -40,8 +40,12 @@ export class User {
   @Prop({ trim: true, required: false })
   picture?: string;
 
+  @Field(() => Boolean, { nullable: true })
+  @Prop({ required: false })
+  needHelp?: Boolean;
+
   @Field(() => Campus, { nullable: true })
-  @Prop({ ref: () => Campus, type: () => ID})
+  @Prop({ ref: () => Campus, type: () => ID, required: false})
   public campus!: Ref<Campus>
 
   @Field(() => Mood, { nullable: true })
