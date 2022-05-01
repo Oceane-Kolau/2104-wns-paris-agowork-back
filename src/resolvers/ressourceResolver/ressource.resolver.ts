@@ -16,37 +16,34 @@ import RessourceInput from "../../models/ressourceModel/ressource.input";
     @Mutation(() => Ressource)
     async createRessource(@Arg("input") input: RessourceInput): Promise<Ressource> {
      
-      const body = {
-        title: input.title,
-        link: input.link,
-
-
-      };
-      const ressource = await(await RessourceModel.create(body)).save();
+      const ressource = new RessourceModel ({
+        ...input
+      }).save();
+  
       return ressource;
     }
   
     @Authorized(['ADMIN', 'TEACHER'])
     @Mutation(() => Ressource, { nullable: true })
-    async deleteUser(@Arg("id", () => ID) id: string) {
-      const user = await RessourceModel.findByIdAndDelete(id);
-      if (!user) throw new Error('Aucun utilisateur ne correspond à la demande');
-      return user;
+    async deleteRessource(@Arg("id", () => ID) id: string) {
+      const deletedRessource = await RessourceModel.findByIdAndDelete(id);
+      if (!deletedRessource) throw new Error('Aucune ressource ne correspond à la demande');
+      return deletedRessource;
     }
   
-    @Authorized(['ADMIN'])
+    @Authorized(['ADMIN', 'TEACHER'])
     @Query(() => [Ressource])
-    async getAllUsers(): Promise<Ressource[]> {
+    async getAllRessources(): Promise<Ressource[]> {
       const ressources = await RessourceModel.find().sort({updatedAt: -1});
       return ressources;
     }
 
     @Authorized(['ADMIN'])
-    @Query(() => User, { nullable: true })
-    async getUserById(@Arg("id", () => ID) id: string) {
-      const user = await RessourceModel.findById(id);
-      if (!user) throw new Error('Aucune ressource ne correspond');
-      return user;
+    @Query(() => Ressource, { nullable: true })
+    async getRessourceById(@Arg("id", () => ID) id: string) {
+      const ressource = await RessourceModel.findById(id);
+      if (!ressource) throw new Error('Aucune ressource ne correspond à la demande');
+      return ressource;
     }
   }
   

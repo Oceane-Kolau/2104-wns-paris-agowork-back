@@ -44,7 +44,7 @@ import {
       return user;
     }
   
-    @Authorized(['ADMIN', 'SUPERADMIN'])
+    @Authorized(['ADMIN'])
     @Mutation(() => User, { nullable: true })
     async deleteUser(@Arg("id", () => ID) id: string) {
       const user = await UserModel.findByIdAndDelete(id);
@@ -52,14 +52,14 @@ import {
       return user;
     }
   
-    @Authorized(['ADMIN', 'SUPERADMIN'])
+    @Authorized(['ADMIN'])
     @Query(() => [User])
     async getAllUsers(): Promise<User[]> {
       const users = await UserModel.find().sort({updatedAt: -1}).populate('campus').populate('mood').exec();
       return users;
     }
 
-    @Authorized(['ADMIN', 'SUPERADMIN'])
+    @Authorized(['ADMIN'])
     @Query(() => User, { nullable: true })
     async getUserById(@Arg("id", () => ID) id: string) {
       const user = await UserModel.findById(id).populate('campus').populate('mood').exec();

@@ -1,17 +1,15 @@
 const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
 require("dotenv").config();
-ObjectId = require('mongodb').ObjectID;
 
 module.exports.createUser = async function () {
   try {
     const dbUrl = 'mongodb://mongodb:27017/agowork';
     const options = {
-      useCreateIndex: true,
       useNewUrlParser: true,
       useUnifiedTopology: true,
     };
-    await mongoose.connect(dbUrl, options);
+    mongoose.connect(dbUrl, options);
 
     const modelUser = mongoose.model('user', new mongoose.Schema({
       firstname: String,

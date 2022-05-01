@@ -7,16 +7,20 @@ export class Ressource {
   id!: string;
 
   @Field(() => String)
-  @Prop({ trim: true })
+  @Prop({ trim: true, unique: true })
   title!: string;
 
   @Field(() => String)
   @Prop({ trim: true, unique: true })
   link!: string;
 
-  @Field(() => [String])
-  @Prop({ type: String, required: false })
-  tags!: mongoose.Types.Array<string>;
+  @Field(() => String, { nullable: true })
+  @Prop({ trim: true, required: false, unique: false })
+  description?: string;
+
+  @Field(() => [String], { nullable: true })
+  @Prop({ type: String, required: false, unique: false })
+  tags?: mongoose.Types.Array<string>;
 }
 
 export const RessourceModel = getModelForClass(Ressource, {
