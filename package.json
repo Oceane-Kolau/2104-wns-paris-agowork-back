@@ -1,6 +1,7 @@
 {
   "name": "agoworkback",
   "version": "1.0.0",
+  "private": true,
   "description": "",
   "main": "src/index.ts",
   "scripts": {
@@ -17,28 +18,29 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@typegoose/typegoose": "^7.6.3",
-    "apollo-server": "^2.25.3",
+    "@typegoose/typegoose": "^9.8.1",
+    "apollo-server": "^3.6.7",
     "bcryptjs": "^2.4.3",
     "class-validator": "^0.13.1",
     "dotenv": "^10.0.0",
-    "graphql": "^15.5.0",
+    "graphql": "^15.8.0",
+    "graphql-tools": "^8.2.8",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.10.0",
+    "mongoose": "^6.3.1",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
-    "@types/jest": "^26.0.24",
-    "@typescript-eslint/eslint-plugin": "^4.22.0",
-    "@typescript-eslint/parser": "^4.22.0",
+    "@types/jest": "^27.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.21.0",
+    "@typescript-eslint/parser": "^5.21.0",
     "apollo-server-testing": "^2.24.1",
-    "eslint": "^7.25.0",
-    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint": "^7.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jest": "^24.3.6",
+    "eslint-plugin-jest": "^26.1.5",
     "eslint-plugin-prettier": "^3.4.0",
     "jest": "^27.5.1",
     "mongodb-memory-server": "^6.9.6",
@@ -48,6 +50,6 @@
     "ts-node": "^9.1.1",
     "ts-node-dev": "^1.1.6",
     "type-graphql": "^1.1.1",
-    "typescript": "^4.2.4"
+    "typescript": "^4.5.0"
   }
 }
