@@ -40,7 +40,7 @@ export default class MoodResolver {
     return users;
   }
 
-  @Authorized(["ADMIN", "SUPERADMIN"])
+  @Authorized(["ADMIN"])
   @Mutation(() => Mood, { nullable: true })
   public async deleteMood(@Arg("id", () => ID) id: string) {
     const mood = await MoodModel.findByIdAndDelete(id);
@@ -48,7 +48,7 @@ export default class MoodResolver {
     return mood;
   }
 
-  @Authorized(["ADMIN", "SUPERADMIN"])
+  @Authorized(["ADMIN"])
   @Mutation(() => Mood)
   public async createMood(
     @Arg("input") input: MoodInput

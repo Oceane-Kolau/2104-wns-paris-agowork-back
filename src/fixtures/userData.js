@@ -45,7 +45,7 @@ module.exports.createUser = async function () {
       console.log("fixtures: users delete()");
     }
 
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 55; i++) {
       let firstname;
       let lastname;
       let email;
@@ -58,12 +58,10 @@ module.exports.createUser = async function () {
       const campusRandom = Math.floor(Math.random() * campus.length);
 
       if (i >= 0 && i < 5) {
-        role = 'SUPERADMIN';
-      } else if (i >= 5 && i < 10) {
         role = 'ADMIN';
-      } else if (i >= 10 && i < 15) {
+      } else if (i >= 5 && i < 10) {
         role = 'TEACHER';
-      } else if (i >= 15 && i < 50) {
+      } else if (i >= 10 && i < 55) {
         role = 'STUDENT';
       }
 

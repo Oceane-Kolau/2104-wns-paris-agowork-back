@@ -15,7 +15,7 @@ import {
   
   @Resolver(User)
   export default class AdminResolver {
-    @Authorized(["ADMIN", "SUPERADMIN"])
+    @Authorized(["ADMIN"])
     @Mutation(() => User)
     async createUser(@Arg("input") input: UserInput): Promise<User> {
       const hashedPassword = await bcrypt.hashSync(input.password, 12);
