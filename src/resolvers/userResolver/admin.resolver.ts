@@ -18,14 +18,14 @@ import {
     @Authorized(["ADMIN", "SUPERADMIN"])
     @Mutation(() => User)
     async createUser(@Arg("input") input: UserInput): Promise<User> {
-      const hashedPassword = await bcrypt.hashSync(input.password, 12);
+      const hashedPassword = bcrypt.hashSync(input.password, 12);
       const campus = await CampusModel.findById({ _id: input.campus }).exec();
       const mood = await MoodModel.findOne({ name: "Au top" }).exec();
 
       if (!campus) throw new Error('Campus introuvable');
       if (!mood) throw new Error('Mood introuvable');
 
-      const body = {
+      const newUser = await new UserModel ({
         firstname: input.firstname,
         lastname: input.lastname,
         town: input.town,
@@ -35,11 +35,12 @@ import {
         campus: campus.id,
         password: hashedPassword,
         mood: mood.id,
-      };
+      }).save();
 
-      let user = await(await UserModel.create(body)).save();
-      
-      user = await user.populate('campus').populate('mood').execPopulate();
+      if (!newUser) throw new Error('Impossible de créer un nouvel utilisateur');
+
+      const user = await UserModel.findById(newUser.id).populate('campus').populate('mood').exec();
+      if (!user) throw new Error('Impossible de traiter la demande');
       return user;
     }
   

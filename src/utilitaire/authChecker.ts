@@ -1,4 +1,5 @@
-import { AuthenticationError, makeRemoteExecutableSchema } from "apollo-server-express";
+import { AuthenticationError } from "apollo-server-express";
+import { makeExecutableSchema } from '@graphql-tools/schema';
 import { AuthChecker } from "type-graphql";
 
 // create auth checker function
