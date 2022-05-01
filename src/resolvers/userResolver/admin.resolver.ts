@@ -18,14 +18,14 @@ import {
     @Authorized(["ADMIN", "SUPERADMIN"])
     @Mutation(() => User)
     async createUser(@Arg("input") input: UserInput): Promise<User> {
-      console.log(input);
-      const hashedPassword = await bcrypt.hashSync(input.password, 12);
+      const hashedPassword = bcrypt.hashSync(input.password, 12);
       const campus = await CampusModel.findById({ _id: input.campus }).exec();
-      console.log(campus)
       const mood = await MoodModel.findOne({ name: "Au top" }).exec();
+
       if (!campus) throw new Error('Campus introuvable');
       if (!mood) throw new Error('Mood introuvable');
-      const body = {
+
+      const newUser = await new UserModel ({
         firstname: input.firstname,
         lastname: input.lastname,
         town: input.town,
@@ -35,10 +35,12 @@ import {
         campus: campus.id,
         password: hashedPassword,
         mood: mood.id,
-      };
-      let user = await(await UserModel.create(body)).save();
-      console.log(user);
-      user = await user.populate('campus').populate('mood').execPopulate();
+      }).save();
+
+      if (!newUser) throw new Error('Impossible de créer un nouvel utilisateur');
+
+      const user = await UserModel.findById(newUser.id).populate('campus').populate('mood').exec();
+      if (!user) throw new Error('Impossible de traiter la demande');
       return user;
     }
   
@@ -61,7 +63,6 @@ import {
     @Query(() => User, { nullable: true })
     async getUserById(@Arg("id", () => ID) id: string) {
       const user = await UserModel.findById(id).populate('campus').populate('mood').exec();
-      console.log(user);
       if (!user) throw new Error('Aucun utilisateur ne correspond à la demande');
       return user;
     }

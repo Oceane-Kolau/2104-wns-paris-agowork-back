@@ -4,9 +4,7 @@ import { ApolloServer } from "apollo-server";
 import { buildSchema } from "type-graphql";
 import { authenticationChecker } from "./utilitaire/authChecker";
 import { Payload, verifyToken } from "./utilitaire/security";
-const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const secret = process.env.SECRET_JWT;
 
 export default async function initServer(): Promise<void> {
   try {

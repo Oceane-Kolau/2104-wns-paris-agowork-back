@@ -24,8 +24,7 @@ export default class MoodResolver {
   ): Promise<object | null> {
     const updatedUser = await UserModel.findOneAndUpdate({ email: email }, {mood: id}, {
       new: true,
-    })
-    await updatedUser?.populate('mood').execPopulate();
+    }).populate('mood').exec()
     return updatedUser;
   }
 
