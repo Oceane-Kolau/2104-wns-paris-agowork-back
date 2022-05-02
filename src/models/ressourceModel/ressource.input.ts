@@ -1,10 +1,13 @@
-import { Field, InputType } from "type-graphql";
+import { Field, ID, InputType } from "type-graphql";
 import { Length } from "class-validator";
 import { Ressource } from "./ressource.schema";
 import mongoose from "mongoose";
 
 @InputType()
-export default class RessourceInput extends Ressource {
+export default class RessourceInput implements Partial<Ressource> {
+  @Field(() => ID, { nullable: true })
+  id?: string;
+
   @Field(() => String)
   @Length(1, 30)
   title!: string;

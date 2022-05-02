@@ -1,16 +1,18 @@
 import { AuthenticationError } from "apollo-server-express";
-import { makeExecutableSchema } from '@graphql-tools/schema';
+import { makeExecutableSchema } from "@graphql-tools/schema";
 import { AuthChecker } from "type-graphql";
 
 // create auth checker function
-export const authenticationChecker = 
-({ context: { role } }: any, roles: string | any[]) => {
+export const authenticationChecker = (
+  { context: { role } }: any,
+  roles: string | any[],
+) => {
   if (roles.length === 0) {
     // if `@Authorized()`, check only if user exists
     return role !== undefined;
   }
   // there are some roles defined now
-  
+
   if (!role) {
     // and if no user, restrict access
     return false;

@@ -8,7 +8,8 @@ import { UserModel } from "../models/userModel/user.schema";
 
 @ValidatorConstraint({ async: true })
 export class IsEmailAlreadyExistConstraint
-  implements ValidatorConstraintInterface {
+  implements ValidatorConstraintInterface
+{
   validate(email: string) {
     return UserModel.findOne({ where: { email } }).then((user) => {
       if (user) return false;

@@ -1,9 +1,5 @@
 import { Field, ID, ObjectType } from "type-graphql";
-import {
-  Prop,
-  getModelForClass,
-  Ref,
-} from "@typegoose/typegoose";
+import { Prop, getModelForClass, Ref } from "@typegoose/typegoose";
 import { Role } from "./role.enum";
 import { Campus } from "../campusModel/campus.schema";
 import { Mood } from "../moodModel/mood.schema";
@@ -45,12 +41,12 @@ export class User {
   needHelp?: Boolean;
 
   @Field(() => Campus, { nullable: true })
-  @Prop({ ref: () => Campus, type: () => ID, required: false})
-  public campus!: Ref<Campus>
+  @Prop({ ref: () => Campus, type: () => ID, required: false })
+  public campus!: Ref<Campus>;
 
   @Field(() => Mood, { nullable: true })
-  @Prop({ ref: () => Mood, type: () => ID, required: false})
-  public mood: Ref<Mood>
+  @Prop({ ref: () => Mood, type: () => ID, required: false })
+  public mood: Ref<Mood>;
 }
 
 export const UserModel = getModelForClass(User, {

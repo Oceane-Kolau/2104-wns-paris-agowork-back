@@ -24,7 +24,7 @@ export default async function initServer(): Promise<void> {
             return {};
           }
         }
-        return {}
+        return {};
       },
     });
 

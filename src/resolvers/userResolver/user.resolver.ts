@@ -1,10 +1,4 @@
-import {
-  Resolver,
-  Query,
-  Arg,
-  Mutation,
-  Ctx,
-} from "type-graphql";
+import { Resolver, Query, Arg, Mutation, Ctx } from "type-graphql";
 import { User } from "../../models/userModel/user.schema";
 import { UserModel } from "../../models/userModel/user.schema";
 import bcrypt from "bcryptjs";
@@ -15,15 +9,24 @@ import { UserInput } from "../../models/userModel/user.input";
 export default class UserResolver {
   @Query(() => User)
   async getLoggedUserByEmail(@Ctx() ctx: Context): Promise<User> {
-    const user = await UserModel.findOne({ email: ctx.email }).populate("campus").populate("mood").exec();
+    const user = await UserModel.findOne({ email: ctx.email })
+      .populate("campus")
+      .populate("mood")
+      .exec();
     if (!user) throw new Error("Aucun utilisateur trouvé");
     return user;
   }
 
-  @Mutation(returns => Boolean)
-  async updateNeedHelp(@Ctx() ctx: Context, @Arg("needHelp", () => Boolean) needHelp:Boolean):Promise<Boolean> {
+  @Mutation(() => Boolean)
+  async updateNeedHelp(
+    @Ctx() ctx: Context,
+    @Arg("needHelp", () => Boolean) needHelp: Boolean,
+  ): Promise<Boolean> {
     const updatedHelp = needHelp;
-    const updatedUser = await UserModel.findOneAndUpdate({ email: ctx.email }, {needHelp: needHelp as Boolean}).exec();
+    const updatedUser = await UserModel.findOneAndUpdate(
+      { email: ctx.email },
+      { needHelp: needHelp as Boolean },
+    ).exec();
     if (!updatedUser) throw new Error("Aucun utilisateur trouvé");
     return updatedHelp;
   }
@@ -32,8 +35,8 @@ export default class UserResolver {
   async updateUser(@Arg("input") input: UserInput): Promise<User | null> {
     let password;
 
-    if (input.password ===  null || input.password === undefined) {
-      const user = await UserModel.findById({_id: input.id });
+    if (input.password === null || input.password === undefined) {
+      const user = await UserModel.findById({ _id: input.id });
       if (!user) {
         throw new Error("Utilisateur introuvable");
       }
@@ -52,10 +55,19 @@ export default class UserResolver {
       campus: input.campus,
     };
 
-    const updatedUser = await UserModel.findOneAndUpdate({ _id: input.id }, body, {returnOriginal: false}).populate("campus").populate("mood").exec();
+    const updatedUser = await UserModel.findOneAndUpdate(
+      { _id: input.id },
+      body,
+      { returnOriginal: false },
+    )
+      .populate("campus")
+      .populate("mood")
+      .exec();
 
     if (!updatedUser) {
-      throw new Error("La modification n'a pas pu être effectuée. Si cela persiste, contactez vore administrateur");
+      throw new Error(
+        "La modification n'a pas pu être effectuée. Si cela persiste, contactez vore administrateur",
+      );
     }
 
     return updatedUser;

@@ -4,12 +4,7 @@ require("dotenv").config();
 
 module.exports.createUser = async function () {
   try {
-    const dbUrl = 'mongodb://mongodb:27017/agowork';
-    const options = {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    };
-    mongoose.connect(dbUrl, options);
+    mongoose.connect('mongodb://mongodb:27017/agowork');
 
     const modelUser = mongoose.model('user', new mongoose.Schema({
       firstname: String,
