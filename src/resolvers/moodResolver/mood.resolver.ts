@@ -43,7 +43,6 @@ export default class MoodResolver {
   @Query(() => [User])
   public async getAllStudentsByMood(@Ctx() ctx: Context): Promise<User[]> {
     const role = "STUDENT" as Role;
-    console.log(ctx.campus)
     const campus = await CampusModel.findOne({ name: ctx.campus });
     const campusId = campus?._id;
     const users = await UserModel.find({ role, campus: campusId })
@@ -69,5 +68,27 @@ export default class MoodResolver {
     const mood = new MoodModel(input);
     await mood.save();
     return mood;
+  }
+
+  @Authorized(["ADMIN"])
+  @Mutation(() => Mood)
+  public async updateMood(
+    @Arg("input") input: MoodInput,
+  ): Promise<object | null> {
+    console.log(input)
+    const updatedMood = await MoodModel.findOneAndUpdate(
+      { _id: input.id },
+      { ...input },
+      { returnOriginal: false },
+    ).exec();
+
+    console.log(updatedMood)
+    if (!updatedMood) {
+      throw new Error(
+        "La modification n'a pas pu être effectuée. Si cela persiste, contactez vore administrateur",
+      );
+    }
+
+    return updatedMood;
   }
 }
