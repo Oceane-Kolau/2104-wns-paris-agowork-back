@@ -5,13 +5,7 @@ ObjectId = require('mongodb').ObjectID;
 
 module.exports.createMood = async function () {
     try {
-        const dbUrl = 'mongodb://mongodb:27017/agowork';
-        const options = {
-            useCreateIndex: true,
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        };
-        await mongoose.connect(dbUrl, options);
+        mongoose.connect('mongodb://mongodb:27017/agowork');
 
         const modelMood = mongoose.model('mood', new mongoose.Schema({
             name: String,

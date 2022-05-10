@@ -5,13 +5,7 @@ require("dotenv").config();
 
 module.exports.createModule = async function () {
   try {
-    const dbUrl = 'mongodb://mongodb:27017/agowork';
-    const options = {
-      useCreateIndex: true,
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    };
-    mongoose.connect(dbUrl, options);
+    mongoose.connect('mongodb://mongodb:27017/agowork');
 
     const ModuleModel = mongoose.model('module', new mongoose.Schema({
       title: {

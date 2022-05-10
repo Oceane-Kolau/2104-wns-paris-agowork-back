@@ -36,7 +36,7 @@ Commandes à lancer dans le repository front au niveau du docker compose :
   exit
   exit
 
-- Pour se connecter au container back docker exec -it agowork_front /bin/sh  
+- Pour se connecter au container docker exec -it agowork_front /bin/sh  
 
 # TO EXECUTE FIXTURES 
   If you want to execute without docker :
