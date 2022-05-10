@@ -43,6 +43,7 @@ export default class MoodResolver {
   @Query(() => [User])
   public async getAllStudentsByMood(@Ctx() ctx: Context): Promise<User[]> {
     const role = "STUDENT" as Role;
+    console.log(ctx.campus)
     const campus = await CampusModel.findOne({ name: ctx.campus });
     const campusId = campus?._id;
     const users = await UserModel.find({ role, campus: campusId })

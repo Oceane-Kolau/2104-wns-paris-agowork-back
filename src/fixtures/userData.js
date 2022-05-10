@@ -17,6 +17,7 @@ module.exports.createUser = async function () {
       picture: String,
       role: String,
       password: String,
+      mood: mongoose.Types.ObjectId,
       campus: mongoose.Types.ObjectId,
     }))
 
@@ -31,7 +32,8 @@ module.exports.createUser = async function () {
       "https://images.unsplash.com/photo-1520423465871-0866049020b7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"
     ];
     const cities = ["Paris", "Londres", "Madrid", "Moscou", "New York", "Long Beach", "Los Angeles", "Marseille", "Nice", "Grenoble", "Brest"];
-    const campus = ["61bb16172591960024a65c37", "61b87be966e6b5001aefd6c6", "61b86357ae43b1001a4a6174", "61b3e1a961959c00195f4b7e"];
+    const campus = ["626f94b1b1e0a9dbe7f2ab47", "62730a16131ebab66dc52676", "627309f7131ebab66dc52672"];
+    const mood = ["627029b2c97b9ac628acddff", "6270106bc6cc0d4054d1f94c", "626f949fe6787fad26d7d484", "62701076c6cc0d4054d1f953"];
 
     if (modelUser.count() !== 0) {
       await modelUser.deleteMany();
@@ -49,6 +51,7 @@ module.exports.createUser = async function () {
       const citiesRandom = Math.floor(Math.random() * cities.length);
       const picturesRandom = Math.floor(Math.random() * pictures.length);
       const campusRandom = Math.floor(Math.random() * campus.length);
+      const moodRandom = Math.floor(Math.random() * mood.length);
 
       if (i >= 0 && i < 5) {
         role = 'ADMIN';
@@ -66,6 +69,7 @@ module.exports.createUser = async function () {
         email: email,
         picture: pictures[picturesRandom],
         role: role,
+        mood: mongoose.Types.ObjectId(mood[moodRandom]),
         password: hashedPassword,
       };
       const user = new modelUser(body);

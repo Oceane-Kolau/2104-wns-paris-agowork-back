@@ -1,5 +1,4 @@
 import { connect } from "mongoose";
-require("dotenv").config();
 
 export default async function connectDB(): Promise<void> {
   try {

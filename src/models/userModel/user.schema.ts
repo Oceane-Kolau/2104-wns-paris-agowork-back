@@ -14,11 +14,11 @@ export class User {
   role!: Role;
 
   @Field()
-  @Prop({ trim: true, required: true, unique: false })
+  @Prop({ trim: true, required: true })
   firstname!: string;
 
   @Field()
-  @Prop({ trim: true, required: true, unique: false })
+  @Prop({ trim: true, required: true })
   lastname!: string;
 
   @Field()
@@ -37,16 +37,16 @@ export class User {
   picture?: string;
 
   @Field(() => Boolean, { nullable: true })
-  @Prop({ required: false })
+  @Prop()
   needHelp?: Boolean;
 
   @Field(() => Campus, { nullable: true })
-  @Prop({ ref: () => Campus, type: () => ID, required: false })
+  @Prop({ ref: () => Campus, type: () => ID })
   public campus!: Ref<Campus>;
 
   @Field(() => Mood, { nullable: true })
-  @Prop({ ref: () => Mood, type: () => ID, required: false })
-  public mood: Ref<Mood>;
+  @Prop({ ref: () => Mood, type: () => ID })
+  public mood?: Ref<Mood>;
 }
 
 export const UserModel = getModelForClass(User, {

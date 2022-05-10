@@ -7,7 +7,6 @@ import {
   ID,
   Ctx,
 } from "type-graphql";
-import { User } from "../../models/userModel/user.schema";
 import {
   Ressource,
   RessourceModel,
@@ -23,7 +22,9 @@ export default class RessourceResolver {
     @Ctx() ctx: Context,
     @Arg("input") input: RessourceInput,
   ): Promise<Ressource> {
-    const ressource = new RessourceModel({
+    const regex = '/(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/';
+    if (!input.link.match(regex)) throw new Error("Le lien de la ressource contient des éléments non validés");
+    const ressource = await new RessourceModel({
       ...input,
       author: ctx.firstname.concat(" ", ctx.lastname),
     }).save();
@@ -47,7 +48,7 @@ export default class RessourceResolver {
     return ressources;
   }
 
-  @Authorized(["ADMIN"])
+  @Authorized(["ADMIN", "TEACHER"])
   @Query(() => Ressource, { nullable: true })
   async getRessourceById(@Arg("id", () => ID) id: string) {
     const ressource = await RessourceModel.findById(id);

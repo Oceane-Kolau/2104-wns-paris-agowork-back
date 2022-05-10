@@ -17,17 +17,16 @@ export default class LoginResolver {
     let campus;
     let mood;
     const user = await UserModel.findOne({ email: email });
-
     if (!user) throw new AuthenticationError("Vous n'avez pas de compte");
-    if (user.campus)
-      campus = await CampusModel.findById({ _id: user.campus }).exec();
+    if (user.campus) campus = await CampusModel.findById({ _id: user.campus }).exec();
     if (user.mood) mood = await MoodModel.findById({ _id: user.mood }).exec();
-
+    
+    console.log(campus);
     if (user && bcrypt.compareSync(password, user.password)) {
       const payload = {
         email: user.email,
         role: user.role,
-        campus: campus?.name,
+        campus: campus.name,
         mood: mood?.icon,
         firstname: user.firstname,
         lastname: user.lastname,
