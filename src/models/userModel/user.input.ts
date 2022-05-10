@@ -40,8 +40,8 @@ export class UserInput implements Partial<User> {
   password!: string;
 
   @Field(() => ID, { nullable: true })
-  campus!: Ref<Campus>
+  campus!: Ref<Campus>;
 
   @Field(() => ID, { nullable: true })
-  mood: Ref<Mood>
+  mood: Ref<Mood>;
 }

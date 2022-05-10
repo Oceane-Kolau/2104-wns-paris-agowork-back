@@ -4,13 +4,7 @@ ObjectId = require('mongodb').ObjectID;
 
 module.exports.createCampus = async function () {
     try {
-        const dbUrl = 'mongodb://mongodb:27017/agowork';
-        const options = {
-            useCreateIndex: true,
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        };
-        await mongoose.connect(dbUrl, options);
+        mongoose.connect('mongodb://mongodb:27017/agowork');
 
         const modelCampus = mongoose.model('campus', new mongoose.Schema({
             address: String,
