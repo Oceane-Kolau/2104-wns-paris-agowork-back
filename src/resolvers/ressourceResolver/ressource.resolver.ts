@@ -22,7 +22,7 @@ export default class RessourceResolver {
     @Ctx() ctx: Context,
     @Arg("input") input: RessourceInput,
   ): Promise<Ressource> {
-    const regex = '/(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/';
+    const regex = /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
     if (!input.link.match(regex)) throw new Error("Le lien de la ressource contient des éléments non validés");
     const ressource = await new RessourceModel({
       ...input,
