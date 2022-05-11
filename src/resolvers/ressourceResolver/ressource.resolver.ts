@@ -41,7 +41,7 @@ export default class RessourceResolver {
     return deletedRessource;
   }
 
-  @Authorized(["ADMIN", "TEACHER"])
+  @Authorized(["ADMIN", "TEACHER", "STUDENT"])
   @Query(() => [Ressource])
   async getAllRessources(): Promise<Ressource[]> {
     const ressources = await RessourceModel.find().sort({ updatedAt: -1 });
@@ -65,7 +65,7 @@ export default class RessourceResolver {
     const updatedRessource = await RessourceModel.findOneAndUpdate(
       { _id: input.id },
       {
-        ...input,
+        ...input
       },
       { returnOriginal: false },
     );

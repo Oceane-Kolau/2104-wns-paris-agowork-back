@@ -25,4 +25,21 @@ export default class CampusResolver {
     if (!campus) throw new Error("Aucun campus ne correspond à la demande");
     return campus;
   }
+
+  @Authorized(["ADMIN"])
+  @Mutation(() => Campus)
+  public async updateCampus(
+    @Arg("input") input: CampusInput,
+  ): Promise<object | null> {
+    const updatedCampus = await CampusModel.findOneAndUpdate(
+      { _id: input.id },
+      { ...input },
+      { returnOriginal: false },
+    );
+
+    if (!updatedCampus)
+      throw new Error("La modification n'a pas pu être effectuée.");
+
+    return updatedCampus;
+  }
 }

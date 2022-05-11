@@ -75,14 +75,12 @@ export default class MoodResolver {
   public async updateMood(
     @Arg("input") input: MoodInput,
   ): Promise<object | null> {
-    console.log(input)
     const updatedMood = await MoodModel.findOneAndUpdate(
       { _id: input.id },
       { ...input },
       { returnOriginal: false },
     ).exec();
 
-    console.log(updatedMood)
     if (!updatedMood) {
       throw new Error(
         "La modification n'a pas pu être effectuée. Si cela persiste, contactez vore administrateur",
