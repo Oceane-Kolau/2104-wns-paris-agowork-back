@@ -35,12 +35,12 @@ export default class UserResolver {
   async updateUser(@Arg("input") input: UserInput): Promise<User | null> {
     let password;
 
-    if (input.password === null || input.password === undefined) {
+    if (input.password === null || input.password === undefined || input.password === "") {
       const user = await UserModel.findById({ _id: input.id });
       if (!user) {
         throw new Error("Utilisateur introuvable");
       }
-      password = user?.password;
+      password = user.password;
     } else {
       password = bcrypt.hashSync(input.password, 12);
     }
@@ -66,7 +66,7 @@ export default class UserResolver {
 
     if (!updatedUser) {
       throw new Error(
-        "La modification n'a pas pu être effectuée. Si cela persiste, contactez vore administrateur",
+        "La modification n'a pas pu être effectuée.",
       );
     }
 
