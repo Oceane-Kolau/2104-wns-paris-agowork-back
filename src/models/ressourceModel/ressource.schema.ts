@@ -1,6 +1,7 @@
 import { Field, ID, ObjectType } from "type-graphql";
 import { Prop, getModelForClass, mongoose } from "@typegoose/typegoose";
 import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
+import { Length, MaxLength } from "class-validator";
 
 @ObjectType()
 export class Ressource {
@@ -11,6 +12,7 @@ export class Ressource {
   updatedAt: TimeStamps | undefined;
 
   @Field(() => String)
+  @Length(5, 10)
   @Prop({ trim: true, unique: true })
   title!: string;
 
@@ -23,6 +25,7 @@ export class Ressource {
   author!: string;
 
   @Field(() => String, { nullable: true })
+  @MaxLength(200)
   @Prop({ trim: true, required: false, unique: false })
   description?: string;
 

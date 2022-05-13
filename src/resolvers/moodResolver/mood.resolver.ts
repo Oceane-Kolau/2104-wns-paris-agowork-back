@@ -17,12 +17,14 @@ import { CampusModel } from "../../models/campusModel/campus.schema";
 
 @Resolver(Mood)
 export default class MoodResolver {
+  @Authorized(["ADMIN", "STUDENT", "TEACHER"])
   @Query(() => [Mood])
   async getMoods(): Promise<Mood[]> {
     const mood = await MoodModel.find().sort({ updatedAt: -1 }).exec();
     return mood;
   }
 
+  @Authorized(["ADMIN", "STUDENT", "TEACHER"])
   @Mutation(() => User)
   public async updateUserMood(
     @Arg("id", () => ID) id: string,
@@ -40,6 +42,7 @@ export default class MoodResolver {
     return updatedUser;
   }
 
+  @Authorized(["ADMIN", "STUDENT", "TEACHER"])
   @Query(() => [User])
   public async getAllStudentsByMood(@Ctx() ctx: Context): Promise<User[]> {
     const role = "STUDENT" as Role;

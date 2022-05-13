@@ -12,6 +12,7 @@ export default class CampusResolver {
     return campus;
   }
 
+  @Authorized(["ADMIN", "STUDENT", "TEACHER"])
   @Query(() => [Campus])
   async getCampus(): Promise<Campus[]> {
     const campus = await CampusModel.find().sort({ updatedAt: -1 }).exec();
