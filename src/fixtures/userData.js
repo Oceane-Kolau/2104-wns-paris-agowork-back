@@ -45,8 +45,8 @@ module.exports.createUser = async function () {
       let lastname;
       let email;
       let role;
-      firstname = `firstname${[i]}`;
-      lastname = `lastname${[i]}`;
+      firstname = `Firstname${[i]}`;
+      lastname = `Lastname${[i]}`;
       email = `email${[i]}@gmail.com`;
       const citiesRandom = Math.floor(Math.random() * cities.length);
       const picturesRandom = Math.floor(Math.random() * pictures.length);
