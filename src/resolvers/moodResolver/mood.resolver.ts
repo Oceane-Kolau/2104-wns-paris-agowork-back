@@ -42,19 +42,6 @@ export default class MoodResolver {
     return updatedUser;
   }
 
-  @Authorized(["ADMIN", "STUDENT", "TEACHER"])
-  @Query(() => [User])
-  public async getAllStudentsByMood(@Ctx() ctx: Context): Promise<User[]> {
-    const role = "STUDENT" as Role;
-    const campus = await CampusModel.findOne({ name: ctx.campus });
-    const campusId = campus?._id;
-    const users = await UserModel.find({ role, campus: campusId })
-      .limit(10)
-      .populate("mood")
-      .exec();
-    return users;
-  }
-
   @Authorized(["ADMIN"])
   @Mutation(() => Mood, { nullable: true })
   public async deleteMood(@Arg("id", () => ID) id: string) {

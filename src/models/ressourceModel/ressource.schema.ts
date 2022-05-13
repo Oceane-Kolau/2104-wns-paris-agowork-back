@@ -25,7 +25,7 @@ export class Ressource {
   author!: string;
 
   @Field(() => String, { nullable: true })
-  @MaxLength(200)
+  @MaxLength(500)
   @Prop({ trim: true, required: false, unique: false })
   description?: string;
 
