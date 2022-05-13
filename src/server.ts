@@ -1,5 +1,4 @@
 import "reflect-metadata";
-import mongoose from "mongoose";
 import { ApolloServer } from "apollo-server";
 import { buildSchema } from "type-graphql";
 import { authenticationChecker } from "./utilitaire/authChecker";

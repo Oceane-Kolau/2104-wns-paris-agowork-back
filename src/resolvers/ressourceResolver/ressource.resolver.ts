@@ -62,6 +62,8 @@ export default class RessourceResolver {
   async updateRessource(
     @Arg("input") input: RessourceInput,
   ): Promise<Ressource | null> {
+    const regex = /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+    if (!input.link.match(regex)) throw new Error("Le lien de la ressource contient des éléments non validés");
     const updatedRessource = await RessourceModel.findOneAndUpdate(
       { _id: input.id },
       {
