@@ -12,6 +12,7 @@ export default class CampusResolver {
     return campus;
   }
 
+  @Authorized(["ADMIN", "STUDENT", "TEACHER"])
   @Query(() => [Campus])
   async getCampus(): Promise<Campus[]> {
     const campus = await CampusModel.find().sort({ updatedAt: -1 }).exec();
@@ -24,5 +25,22 @@ export default class CampusResolver {
     const campus = await CampusModel.findByIdAndDelete(id);
     if (!campus) throw new Error("Aucun campus ne correspond à la demande");
     return campus;
+  }
+
+  @Authorized(["ADMIN"])
+  @Mutation(() => Campus)
+  public async updateCampus(
+    @Arg("input") input: CampusInput,
+  ): Promise<object | null> {
+    const updatedCampus = await CampusModel.findOneAndUpdate(
+      { _id: input.id },
+      { ...input },
+      { returnOriginal: false },
+    );
+
+    if (!updatedCampus)
+      throw new Error("La modification n'a pas pu être effectuée.");
+
+    return updatedCampus;
   }
 }

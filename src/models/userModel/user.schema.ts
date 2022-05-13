@@ -3,6 +3,7 @@ import { Prop, getModelForClass, Ref } from "@typegoose/typegoose";
 import { Role } from "./role.enum";
 import { Campus } from "../campusModel/campus.schema";
 import { Mood } from "../moodModel/mood.schema";
+import { IsEmail, Length, MaxLength, IsBoolean } from "class-validator";
 
 @ObjectType()
 export class User {
@@ -14,21 +15,26 @@ export class User {
   role!: Role;
 
   @Field()
+  @MaxLength(20)
   @Prop({ trim: true, required: true })
   firstname!: string;
 
   @Field()
+  @MaxLength(20)
   @Prop({ trim: true, required: true })
   lastname!: string;
 
   @Field()
+  @IsEmail()
   @Prop({ trim: true, required: true, unique: true })
   email!: string;
 
   @Prop({ trim: true, required: true })
+  @Length(8, 32)
   password!: string;
 
   @Field(() => String, { nullable: true })
+  @MaxLength(30)
   @Prop({ trim: true, required: false })
   town?: string;
 
@@ -37,6 +43,7 @@ export class User {
   picture?: string;
 
   @Field(() => Boolean, { nullable: true })
+  @IsBoolean()
   @Prop()
   needHelp?: Boolean;
 

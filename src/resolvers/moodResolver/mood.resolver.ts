@@ -17,12 +17,14 @@ import { CampusModel } from "../../models/campusModel/campus.schema";
 
 @Resolver(Mood)
 export default class MoodResolver {
+  @Authorized(["ADMIN", "STUDENT", "TEACHER"])
   @Query(() => [Mood])
   async getMoods(): Promise<Mood[]> {
     const mood = await MoodModel.find().sort({ updatedAt: -1 }).exec();
     return mood;
   }
 
+  @Authorized(["ADMIN", "STUDENT", "TEACHER"])
   @Mutation(() => User)
   public async updateUserMood(
     @Arg("id", () => ID) id: string,
@@ -38,18 +40,6 @@ export default class MoodResolver {
       .populate("mood")
       .exec();
     return updatedUser;
-  }
-
-  @Query(() => [User])
-  public async getAllStudentsByMood(@Ctx() ctx: Context): Promise<User[]> {
-    const role = "STUDENT" as Role;
-    const campus = await CampusModel.findOne({ name: ctx.campus });
-    const campusId = campus?._id;
-    const users = await UserModel.find({ role, campus: campusId })
-      .limit(10)
-      .populate("mood")
-      .exec();
-    return users;
   }
 
   @Authorized(["ADMIN"])
@@ -75,14 +65,12 @@ export default class MoodResolver {
   public async updateMood(
     @Arg("input") input: MoodInput,
   ): Promise<object | null> {
-    console.log(input)
     const updatedMood = await MoodModel.findOneAndUpdate(
       { _id: input.id },
       { ...input },
       { returnOriginal: false },
     ).exec();
 
-    console.log(updatedMood)
     if (!updatedMood) {
       throw new Error(
         "La modification n'a pas pu être effectuée. Si cela persiste, contactez vore administrateur",
