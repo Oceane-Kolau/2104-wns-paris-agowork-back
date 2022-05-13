@@ -21,7 +21,7 @@ module.exports.createUser = async function () {
       campus: mongoose.Types.ObjectId,
     }));
 
-    const password = 'password';
+    const password = 'Password123';
     const hashedPassword = await bcrypt.hashSync(password, 12);
     const pictures = ['https://images.unsplash.com/photo-1628157588553-5eeea00af15c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80',
       'https://images.unsplash.com/photo-1624561172888-ac93c696e10c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=989&q=80',
@@ -45,8 +45,8 @@ module.exports.createUser = async function () {
       let lastname;
       let email;
       let role;
-      firstname = `firstname${[i]}`;
-      lastname = `lastname${[i]}`;
+      firstname = `Firstname${[i]}`;
+      lastname = `Lastname${[i]}`;
       email = `email${[i]}@gmail.com`;
       const citiesRandom = Math.floor(Math.random() * cities.length);
       const picturesRandom = Math.floor(Math.random() * pictures.length);
