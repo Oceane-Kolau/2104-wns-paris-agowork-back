@@ -61,6 +61,9 @@ Commandes à lancer dans le repository front au niveau du docker compose :
   . for production:
   docker exec -it 2104-wns-paris-agowork-front_server_1 node -e 'require("./src/fixtures/userData.js").createUser()'
 
+  To modify multiple element in database : 
+  db.collections.updateMany({},{$set: {"key" : "value"}});
+
 ### docker ps : list all running docker containers
 ### docker kill containerID
 ### To add graphql faker to the client Dockerfile : COPY schema.faker.graphql

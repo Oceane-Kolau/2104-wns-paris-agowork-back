@@ -1,7 +1,7 @@
 // command to initialize users in database
 // node -e 'require(\"./src/Fixtures/moduleData.js\").createModule()'
-const mongoose = require("mongoose");
-require("dotenv").config();
+const mongoose = require('mongoose');
+require('dotenv').config();
 
 module.exports.createModule = async function () {
   try {
@@ -13,37 +13,37 @@ module.exports.createModule = async function () {
         unique: true,
       },
       content: String,
-    }))
+    }));
 
     const comment = [
-      "JavaScript, often abbreviated as JS, is a high-level, interpreted programming.",
-      "React est une bibliothèque JavaScript permettant de construire des interfaces.",
-      "TypeScript is an open-source programming language. It is a strict syntactical.",
-      "React Native - Build native iOS, Android and Windows apps with JavaScript.",
-      "Découvre comment utiliser les class components en React",
-    ]
+      'JavaScript, often abbreviated as JS, is a high-level, interpreted programming.',
+      'React est une bibliothèque JavaScript permettant de construire des interfaces.',
+      'TypeScript is an open-source programming language. It is a strict syntactical.',
+      'React Native - Build native iOS, Android and Windows apps with JavaScript.',
+      'Découvre comment utiliser les class components en React',
+    ];
 
     if (ModuleModel.count() !== 0) {
       await ModuleModel.deleteMany();
-      console.log("fixtures: modules delete()");
+      console.log('fixtures: modules delete()');
     }
 
     for (let i = 0; i < 8; i++) {
       let title;
       let content;
-      title = "title" + [i];
+      title = `title${[i]}`;
       content = comment;
       const chance = Math.floor(Math.random() * content.length);
 
       const program = {
-        title: title,
+        title,
         content: content[chance],
       };
       const module = new ModuleModel(program);
       await module.save();
     }
-    console.log("fixtures: modules saved()");
+    console.log('fixtures: modules saved()');
   } catch (err) {
     console.log(err);
   }
-}
+};
